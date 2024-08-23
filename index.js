@@ -41,37 +41,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Write your code here//
 
 //CHALLENGE 1: GET All posts
-app.get("/posts" , (req,res)=>{
+app.get("/posts", (req, res) => {
   return res.json(posts);
 })
 
 //CHALLENGE 2: GET a specific post by id
-app.get("/posts/:id" , (req,res)=>{
+app.get("/posts/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const foundId = posts.find((post) => post.id === id);
   return res.json(foundId);
 })
 //CHALLENGE 3: POST a new post
-app.post("/posts" , (req,res)=>{
-  const newBlog = {id:posts.length+1,content:req.body.content , title:req.body.title,author:req.body.author , date:new Date()}
+app.post("/posts", (req, res) => {
+  const newBlog = { id: posts.length + 1, content: req.body.content, title: req.body.title, author: req.body.author, date: new Date() }
   console.log(newBlog);
   posts.push(newBlog);
   return res.json(posts);
 })
 //CHALLENGE 4: PATCH a post when you just want to update one parameter
-app.patch("/posts/:id" , (req,res) =>{
-  console.log("about to patch");
+app.patch("/posts/:id", (req, res) => {
+
   const id = parseInt(req.params.id);
   const existingPost = posts.find((post) => post.id === id);
-  console.log(existingPost);
+
   const replacementPost = {
     id: id,
     content: req.body.content || existingPost.content,
     title: req.body.title || existingPost.title,
-    author:req.body.author || existingPost.author,
-    date:new Date()
+    author: req.body.author || existingPost.author,
+    date: new Date()
   };
-  console.log("replacement"+replacementPost);
+
   const searchId = posts.findIndex((post) => post.id === id);
   posts[searchId] = replacementPost;
   console.log(posts[searchId]);
@@ -79,13 +79,13 @@ app.patch("/posts/:id" , (req,res) =>{
 })
 
 //CHALLENGE 5: DELETE a specific post by providing the post id.
-app.delete("/posts/:id" , (req,res)=>{
-  const  id = parseInt(req.params.id);
+app.delete("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
   const searchId = posts.findIndex((post) => post.id === id);
-  if (searchId>-1){
-    posts.splice(searchId,1);
+  if (searchId > -1) {
+    posts.splice(searchId, 1);
   }
- 
+
   return res.json(posts);
 
 })
